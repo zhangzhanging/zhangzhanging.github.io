@@ -1,59 +1,32 @@
-# Jekyll Cayman theme
+# About
 
-This is a [Jekyll][1] theme for [@jasonlong][2]'s [Cayman theme][4] on [GitHub Pages][3].
+This is my blog based on jekyll. And I change the style and interactive. If you want to use this model of the blog. **Please give a star at this repository**. Then you can clone it as your blog model.
 
-Cayman is a clean, responsive theme for [GitHub Pages](https://pages.github.com). This theme is available as an option if you use the [Automatic Page Generator](https://help.github.com/articles/creating-pages-with-the-automatic-generator/) or you can copy the template and styles to use on your own.
+You can visit [here](http://gaohaoyang.github.io) to see this blog.
 
-You can preview the theme at http://jasonlong.github.io/cayman-theme or with real content at http://jasonlong.github.io/geo_pattern.
+---
 
-![](http://cl.ly/image/1T3r3d18311V/content)
+这是我的博客，基于 jekyll。我改了所有默认的样式和交互。如果你想使用这个博客模板。**请先在这个仓库上点个star吧**，这也是对我的肯定和鼓励，谢谢了。然后你可以克隆这个仓库用作你自己的博客。
 
-# How to use it?
+博客访问地址：[点击这里](http://gaohaoyang.github.io)
 
-Download the theme @ http://github.com/pietromenna/jekyll-cayman-theme/archive/master.zip
+**使用时请注明模板来源:  Jekyll theme by [Gaohaoyang](https://github.com/Gaohaoyang/gaohaoyang.github.io)**
 
-Unzip it and use it as a regular jekyll folder.
+<!--
 
-```
-$ unzip jekyll-cayman-theme-master.zip
-```
+## 被引用信息
 
-Get inside the newly extracted folder
-```
-$ cd jekyll-cayman-theme-master
-```
+使用了我的模板并写明来源的人：   
 
-Get the required gems
-```
-$ bundle install
-```
+* [dreamholy](http://dreamholy.github.io/)
 
-Use it!
+没有注明来源的人：
 
-```
-$ jekyll serve
-```
-
-For more details read about [Jekyll][1] on its web page.
-
-# Setup
-
-Some important configuration can be done in the file `_config.yml`. Please, check the Setup section in that file.
+* [yangshuailing](http://yangshuailing.github.io/com/)
+* [huapu728](http://huapu728.github.io/)
+* [greatbuger](http://greatbuger.github.io/) 
 
 
-## baseurl
+-->
 
-`baseurl` parameter is required in the case the site doesn't sit on the root of the domain. For example: http://pietromenna.github.io/jekyll-cayman-theme
 
-In the case above the baseurl should be set to "/jekyll-cayman-theme".
-
-In the case the site sits in the root, you can leave `baseurl` as empty "".
-
-# License
-
-This work is licensed under a [Creative Commons Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/) license.
-
-[1]: http://jekyllrb.com/
-[2]: https://github.com/jasonlong
-[3]: http://pages.github.com/
-[4]: https://github.com/jasonlong/cayman-theme
