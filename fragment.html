@@ -6,6 +6,38 @@
 	<style type="text/css">
 		body{
 			font-family: "Microsoft Yahei";
+			margin:0;
+		    padding:0; 
+		}
+		header{
+		height: 100px;
+		background-color: #009987;
+	}
+		.info{
+			padding-left: 20px;
+			padding-top: 10px;
+			line-height: 100px;
+		}
+		.blog-photo{
+			display: inline-block;
+			margin-right: 5px;
+		}
+		.blog-photo img{
+			width: 50px;
+			height: 50px;
+			border-radius: 100%;
+		}
+		.blog-intro{
+			display: inline-block;
+			color: rgb(255,255,255);
+			font-family: "Microsoft YaHei";
+
+		}
+		.blog-intro p{
+			height: 10px;
+			line-height: 10px;
+			margin-top: 0px;
+			margin-right: 0px;
 		}
 		.container{
 			width: 80%;
@@ -40,6 +72,15 @@
 	</style>
 </head>
 <body>
+<header>
+	<div class="info">
+		<div class="blog-photo"><img src="images/me.jpg"></div>
+		<div class="blog-intro">
+			<p class="blog-name">初木禾君</p>
+			<p class="blog-university">Tianjin University</p>
+		</div>
+	</div>
+</header>
 <div class="container">
 	<article>
 		<h2>博弈论综述</h2>

@@ -4,6 +4,40 @@
 	<title>网络数据采集</title>
 	<meta charset="utf-8">
 	<style type="text/css">
+	body{
+		margin:0;
+		padding:0; 
+	}
+	header{
+		height: 100px;
+		background-color: #009987;
+	}
+		.info{
+			padding-left: 20px;
+			padding-top: 10px;
+			line-height: 100px;
+		}
+		.blog-photo{
+			display: inline-block;
+			margin-right: 5px;
+		}
+		.blog-photo img{
+			width: 50px;
+			height: 50px;
+			border-radius: 100%;
+		}
+		.blog-intro{
+			display: inline-block;
+			color: rgb(255,255,255);
+			font-family: "Microsoft YaHei";
+
+		}
+		.blog-intro p{
+			height: 10px;
+			line-height: 10px;
+			margin-top: 0px;
+			margin-right: 0px;
+		}
 		.container{
 			width: 80%;
 			margin-left: auto;
@@ -35,6 +69,15 @@
 	</style>
 </head>
 <body>
+<header>
+	<div class="info">
+		<div class="blog-photo"><img src="images/me.jpg"></div>
+		<div class="blog-intro">
+			<p class="blog-name">初木禾君</p>
+			<p class="blog-university">Tianjin University</p>
+		</div>
+	</div>
+</header>
 <div class="container">
 	<h1>利用python和正则表达式采集网络数据</h1>
 	<article>
