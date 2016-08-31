@@ -3,78 +3,14 @@
 <head>
 	<title>杂谈</title>
 	<meta charset="utf-8">
-	<style type="text/css">
-		body{
-			font-family: "Microsoft Yahei";
-			margin:0;
-		    padding:0; 
-		}
-		header{
-		height: 100px;
-		background-color: #009987;
-	}
-		.info{
-			padding-left: 20px;
-			padding-top: 10px;
-			line-height: 100px;
-		}
-		.blog-photo{
-			display: inline-block;
-			margin-right: 5px;
-		}
-		.blog-photo img{
-			width: 50px;
-			height: 50px;
-			border-radius: 100%;
-		}
-		.blog-intro{
-			display: inline-block;
-			color: rgb(255,255,255);
-			font-family: "Microsoft YaHei";
-
-		}
-		.blog-intro p{
-			height: 10px;
-			line-height: 10px;
-			margin-top: 0px;
-			margin-right: 0px;
-		}
-		.container{
-			width: 80%;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		h2{
-			font-size: 20px;
-			width: 80%;
-			color: #009987;
-			
-		}
-		h3{
-			font-size: 18px;
-			width: 80%;
-			color: #ff7700;
-		}
-		p{
-			font-size: 16px;
-		}
-		ul{
-			text-decoration: none;
-		}
-		li{
-			text-decoration: none;
-			list-style-type: none;
-		}
-		footer{
-			font-size: 14px;
-			float: right;
-		}
-	</style>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	
 </head>
 <body>
 <header>
 	<div class="info">
-		<div class="blog-photo"><img src="images/me.jpg"></div>
+		<div class="blog-photo"><img src="../images/me.jpg"></div>
 		<div class="blog-intro">
 			<p class="blog-name">初木禾君</p>
 			<p class="blog-university">Tianjin University</p>
@@ -154,7 +90,7 @@
 			</table>
 			<p>这个博弈中并不存在劣势策略，我们根据防守方的左路以及右路选择的概率来得到我们的最佳策略。</p>
 			<p>根据概率关系得到下表：</p>
-			<p><img src="images/part2.png" style="width:200px;height:160px"></p>
+			<p><img src="../images/part2.png" style="width:200px;height:160px"></p>
 			<p>假设防守者选择右的概率为p，那么他选择左的概率为1-p (两点分布)。</p>
 			<ul>
 				<li>当我选择上，我的收益为0*p+5*(1-p) </li>
@@ -168,7 +104,7 @@
 		<h2>连续型策略博弈实例分析</h2>
 		<p>描述：两个伙伴共同经营一家公司并且平分利益。每个合伙人投入的时间为【1 , 4】，（连续），总利润：4*【s1+s2+b*s1*s2】(0<=b<=1/4)。</p>
 		<p>各方收益： 1/2 *4*【s1+s2+b*s1*s2】通过一阶导数和二阶倒数来确定双方的最值函数。（这里我们令b=1/4）S1的最大值为1+b*S2，由对称性S2的最大值为1+b*S1.</p>
-		<p><img src="images/part3.png" style="width:200px;height:160px"></p>
+		<p><img src="../images/part3.png" style="width:200px;height:160px"></p>
 		<p>接着开始剔除劣势策略，s1在（0,1）和（2,4）的取值范围内不会是最优策略，同理s2在（0,1）和（2,4）的取值范围内不会是最优策略，迭代至无穷会得到两者的交点。其实，该交点是一个纳什平衡点，即两个人都不愿偏离该平衡点。</p>
 	</article>
 	<footer>

@@ -1,72 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>网络数据采集</title>
+	<title></title>
 	<meta charset="utf-8">
-	<style type="text/css">
-	body{
-		margin:0;
-		padding:0; 
-	}
-	header{
-		height: 100px;
-		background-color: #009987;
-	}
-		.info{
-			padding-left: 20px;
-			padding-top: 10px;
-			line-height: 100px;
-		}
-		.blog-photo{
-			display: inline-block;
-			margin-right: 5px;
-		}
-		.blog-photo img{
-			width: 50px;
-			height: 50px;
-			border-radius: 100%;
-		}
-		.blog-intro{
-			display: inline-block;
-			color: rgb(255,255,255);
-			font-family: "Microsoft YaHei";
-
-		}
-		.blog-intro p{
-			height: 10px;
-			line-height: 10px;
-			margin-top: 0px;
-			margin-right: 0px;
-		}
-		.container{
-			width: 80%;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		h1{
-			font-size: 22px;
-			width: 80%;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		h2{
-			font-size: 20px;
-			width: 80%;
-			margin-left: auto;
-			margin-right: auto;
-		}
-		pre{
-			font-size: 18px;
-			color: rgb(255,255,255);
-			background-color: rgb(39, 40, 35);
-			width: 80%;
-			margin-left: auto;
-			margin-right: auto;
-			text-align: left;
-			overflow: auto;
-			line-height: 24px;
-		}
-	</style>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
 <header>
@@ -78,66 +16,28 @@
 		</div>
 	</div>
 </header>
-<div class="container">
-	<h1>利用python和正则表达式采集网络数据</h1>
-	<article>
-		<h2>获取segmentfault推荐的博客标题</h2>
-		<p>
-			<pre>
-    #by zhangtao
-    #coding:utf-8
-    import urllib
-    import urllib2
-    import re
-    url = "https://segmentfault.com/blogs"
-    headers = { 'Host' : 'segmentfault.com',
-                'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64) 
-                                AppleWebKit/537.36 (KHTML, like Gecko) 
-                                Chrome/50.0.2661.102 Safari/537.36',
-                 'Referer':'https://segmentfault.com/blogs'} 
-    #构建请求的request
-    request = urllib2.Request(url=url,headers=headers)
-    #利用urlopen获取页面代码
-    response = urllib2.urlopen(request)
-    #利用正则表达式确定匹配
-    pattern = re.compile(' &lt;h2 class="title"&gt;&lt;a href="/a/.*?"&gt;(.*?)&lt;/a&gt;&lt;/h2&gt;',re.S)
-    #找出所有的符合该模式的语句
-    items = re.findall(pattern,response.read())
-    #遍历输出
-    for item in items:
-    	print item
-    	print 
-			</pre>
-		</p>
-	</article>
-	<article>
-		<h2>获取稀土掘金前端推荐的博客标题</h2>
-		<p>
-			<pre>
-	#by zhangtao
-	#coding:utf-8
-	import urllib
-	import urllib2
-	import re
-	url = "http://gold.xitu.io/welcome/frontend"
-	headers = { 'Host' : 'gold.xitu.io',
-		    'User-Agent' : 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)',
-		    'Referer':'http://gold.xitu.io/welcome/frontend' } 
-	#构建请求的request
-	request = urllib2.Request(url=url,headers=headers)
-	#利用urlopen获取页面代码
-	response = urllib2.urlopen(request)
-	#利用正则表达式确定匹配
-	pattern = re.compile('&lt;div class="entry-title ellipsis"&gt;(.*?)&lt;/div&gt;',re.S)
-	#找出所有的符合该模式的语句
-	items = re.findall(pattern,response.read())
-	#遍历输出
-	for item in items:
-	print item
-	print 
-			</pre>
-		</p>
-	</article>
+<div class="wrap">
+	<div class="section"></div>
+	<div class="sidebar">
+		<div class="blog-tags"><h2>Blog Tags</h2>
+			 <ul><li>python</li>
+				<li>生活杂谈</li>
+				<li>前端开发</li>
+			 </ul>
+		</div>
+		<div class="recent-posts">
+			<h2>Recent posts</h2>
+			<ul><li>2016/8/31</li>
+			<li>2016/8/30</li>
+			<li>2016/8/29</li></ul>
+		</div>
+		<div class="connect-me">
+			<h2>Get in touch with us at zhangzhanging@gmail.com</h2>
+		</div>
+		<div class="share">
+			<h2>Share</h2>
+		</div>
+	</div>
 </div>
 </body>
 </html>

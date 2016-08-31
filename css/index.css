@@ -1,0 +1,81 @@
+body{
+	margin:0;
+	padding:0; 
+	font-family: "Microsoft YaHei";
+}
+header{
+	height: 100px;
+	background-color: #009987;
+}
+.info{
+	padding-left: 20px;
+	padding-top: 10px;
+	line-height: 100px;
+}
+.blog-photo{
+	display: inline-block;
+	margin-right: 5px;
+}
+.blog-photo img{
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+}
+.blog-intro{
+	display: inline-block;
+	color: rgb(255,255,255);
+	font-family: "Microsoft YaHei";
+
+}
+.blog-intro p{
+		height: 10px;
+		line-height: 10px;
+		margin-top: 0px;
+		margin-right: 0px;
+}
+.container{
+			width: 70%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		h1{
+			font-size: 22px;
+			margin-left: auto;
+			margin-right: auto;
+			
+		}
+		h2{
+			font-size: 20px;
+			
+			color: #ff7700;
+		}
+		h3{
+			font-size: 18px;
+			color: #009987;
+		}
+		pre{
+			font-size: 18px;
+			color: rgb(255,255,255);
+			background-color: rgb(39, 40, 35);
+			
+			margin-left: auto;
+			margin-right: auto;
+			text-align: left;
+			overflow: auto;
+			line-height: 24px;
+			padding-left: 30px;
+		}
+		p{
+			font-size: 16px;
+		}
+		ul{
+			text-decoration: none;
+		}
+		li{
+			text-decoration: none;
+			list-style-type: none;
+		}
+		footer{
+			font-size: 14px;
+			float: right;
+		}
