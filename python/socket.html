@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>python coding</title>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+</head>
+<body>
+<header>
+	<div class="info">
+		<div class="blog-photo"><img src="../images/me.jpg"></div>
+		<div class="blog-intro">
+			<p class="blog-name">初木禾君</p>
+			<p class="blog-university">Tianjin University</p>
+		</div>
+	</div>
+</header>
+<div class="container">
+<h1>使用python创建套接字</h1>
+<article>
+	<p>
+		套接字是一种具有之前所说的“通信端点”概念的计算网络数据结构。相当于电话插口，没它无法通信，这个比喻非常形象。</p>
+	<p>套接字起源于20世纪70年代加州伯克利分校版本的Unix，即BSD Unix。又称为“伯克利套接字”或“BSD套接字”。最初套接字被设计用在同一台主机上多个应用程序之间的通讯，这被称为进程间通讯或IPC。
+套接字分两种：基于文件型和基于网络的
+第一个套接字家族为AF_UNIX，表示“地址家族：UNIX”。包括Python在内的大多数流行平台上都使用术语“地址家族”及其缩写AF。由于两个进程都运行在同一台机器上，而且这些套接字是基于文件的，所以它们的底层结构是由文件系统来支持的。可以理解为同一台电脑上，文件系统确实是不同的进程都能进行访问的。
+第二个套接字家族为AF_INET，表示”地址家族：Internet“。还有一种地址家族AF_INET6被用于网际协议IPv6寻址。Python 2.5中加入了一种Linux套接字的支持：AF_NETLINK（无连接）套接字家族，让用户代码与内核代码之间的IPC可以使用标准BSD套接字接口，这种方法更为精巧和安全。
+Python只支持AF_UNIX、AF_NETLINK和AF_INET家族。网络编程关注AF_INET。</p>
+	<p>
+如果把套接字比作电话的查看——即通信的最底层结构，那主机与端口就相当于区号和电话号码的一对组合。一个因特网地址由网络通信必须的主机与端口组成。
+而且另一端一定要有人接听才行，否则会提示”对不起，您拨打的电话是空号，请查询后再拨“。同样你也可能会遇到如”不能连接该服务器、服务器无法响应“等。合法的端口范围是0~65535，其中小于1024端口号为系统保留端口。
+	</p>
+</article>
+<article>
+	<h2>tcp套接字(服务器端)</h2>
+	<pre>
+# -*- coding: utf-8 -*- 
+from socket import *
+from time import ctime
+
+HOST = 'localhost'          #主机名
+PORT =  21567               #端口号
+BUFSIZE = 1024              #缓冲区大小1K
+ADDR = (HOST,PORT)
+
+tcpSerSock = socket(AF_INET, SOCK_STREAM) #tcp套接字
+tcpSerSock.bind(ADDR)       #绑定地址到套接字
+tcpSerSock.listen(5)        #监听 最多同时5个连接进来
+
+while True:                 #无限循环等待连接到来
+    try:
+        print 'Waiting for connection ....'
+        tcpCliSock, addr = tcpSerSock.accept()  #被动接受客户端连接
+        print u'Connected client from : ', addr
+
+        while True:
+            data = tcpCliSock.recv(BUFSIZE)     #接受数据
+            if not data:
+                break
+            else:
+                print 'Client: ',data
+            tcpCliSock.send('[%s] %s' %(ctime(),data)) #时间戳
+
+    except Exception,e:
+        print 'Error: ',e
+tcpSerSock.close()          #关闭服务器
+
+		
+	</pre>
+</article>
+<article>
+	<h2>tcp套接字(客户端)</h2>
+	<pre>
+# -*- coding: utf-8 -*- 
+from socket import *
+from time import ctime
+HOST = 'localhost'          #主机名
+PORT =  21567               #端口号 与服务器一致
+BUFSIZE = 1024              #缓冲区大小1K
+ADDR = (HOST,PORT)
+
+tcpCliSock = socket(AF_INET, SOCK_STREAM)
+tcpCliSock.connect(ADDR)    #连接服务器
+
+while True:                 #无限循环等待连接到来
+    try:
+        data = raw_input('>')
+        if not data:
+            break
+        tcpCliSock.send(data)            #发送数据
+        data = tcpCliSock.recv(BUFSIZE)  #接受数据
+        if not data:
+            break
+        print 'Server: ', data
+    except Exception,e:
+        print 'Error: ',e
+        
+tcpCliSock.close()          #关闭客户端
+	</pre>
+</article>
+<article>
+	<h2>udp套接字(服务器端)</h2>
+	<pre>
+# -*- coding: utf-8 -*- 
+from socket import *
+from time import ctime
+
+HOST = 'localhost'                   #主机名
+PORT =  21567               #端口号
+BUFSIZE = 1024              #缓冲区大小1K
+ADDR = (HOST,PORT)
+
+udpSerSock = socket(AF_INET, SOCK_DGRAM) #udp套接字
+udpSerSock.bind(ADDR)       #绑定地址到套接字
+
+while True:                 #无限循环等待连接到来
+    try:
+        print 'Waiting for message ....'
+        data, addr = udpSerSock.recvfrom(BUFSIZE)          #接受UDP
+        print 'Get client msg is: ', data
+        udpSerSock.sendto('[%s] %s' %(ctime(),data), addr) #发送UDP
+        print 'Received from and returned to: ',addr
+
+    except Exception,e:
+        print 'Error: ',e
+udpSerSock.close()          #关闭服务器
+	</pre>
+</article>
+<article>
+	<h2>udp套接字(客户端)</h2>
+	<pre>
+# -*- coding: utf-8 -*- 
+from socket import *
+
+HOST = 'localhost'          #主机名
+PORT =  21567               #端口号 与服务器一致
+BUFSIZE = 1024              #缓冲区大小1K
+ADDR = (HOST,PORT)
+
+udpCliSock = socket(AF_INET, SOCK_DGRAM)
+
+while True:                 #无限循环等待连接到来
+    try:
+        data = raw_input('>')
+        if not data:
+            break
+        udpCliSock.sendto(data, ADDR)            #发送数据
+        data,ADDR = udpCliSock.recvfrom(BUFSIZE)  #接受数据
+        if not data:
+            break
+        print 'Server : ', data
+
+    except Exception,e:
+        print 'Error: ',e
+        
+udpCliSock.close()          #关闭客户端
+	</pre>
+</article>
+</div>
+</body>
+</html>
