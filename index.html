@@ -5,6 +5,39 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
 	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<style type="text/css">
+	.wrap{
+		width: 90%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+		.blog-tags{
+			float: right;
+		}
+		.blog-tags h3{
+			background-color: #009987;
+			color: #fff;
+			text-align: center;
+			line-height: 25px;
+			margin-bottom: 0;
+			font-size: 16px;
+			letter-spacing: 1px;
+			
+		}
+		.blog-tags ul{
+			padding-left: 0;
+			padding-top: 0px;
+			padding-bottom: 0;
+		}
+		.articles-list li{
+			line-height: 25px;
+			padding-left: 5px;
+			letter-spacing: 1px;
+			border-left: 1px solid rgba(33,33,33,0.3);
+			border-right: 1px solid rgba(33,33,33,0.3);
+			border-bottom: 1px solid rgba(33,33,33,0.3);
+		}
+	</style>
 </head>
 <body>
 <header>
@@ -17,32 +50,53 @@
 	</div>
 </header>
 <div class="wrap">
-	<div class="section"></div>
+	
 	<div class="sidebar">
-		<div class="blog-tags"><h2>Blog Tags</h2>
-			 <ul><li><a href="webScraping/python_crawler.html">python爬虫-0</a></li>
-			 	 <li><a href="webScraping/python_crawler1.html">python爬虫-1</a></li>
-			 	 <li><a href="python/connect_mysql.html">python连接mysql数据库</a></li>
-			 	 <li><a href="python/sent_mail.html">python发送邮件</a></li>
-			 	 <li><a href="python/socket.html">python写套接字</a></li>
-				<li><a href="fragment/game.html">策略博弈</li>
-				<li><a href="fragment/microcontrollers.html">MCS-51单片机</li>
-				<li><a href="webScraping/node_crawler.html">node爬虫</a></li>
-				<li>前端开发</li>
+		<div class="blog-tags">
+			 <ul><li><h3>learning python</h3>
+					<ul class="articles-list">
+						<li><a href="webScraping/python_crawler.html">python爬虫-0</a></li>
+			 	 		<li><a href="webScraping/python_crawler1.html">python爬虫-1</a></li>
+			 	 		<li><a href="python/connect_mysql.html">python连接mysql数据库</a></li>
+			 	 		<li><a href="python/sent_mail.html">python发送邮件</a></li>
+			 	 		<li><a href="python/socket.html">python写套接字</a></li>
+					</ul>
+			 	</li>
+
+				<li><h3>在路上</h3>
+					<ul class="articles-list">
+						
+						<li><a href="fragment/game.html">策略博弈</a></li></li>
+					</ul>
+				</li>
+
+				<li><h3>MCS-51单片机</h3>
+						<ul class="articles-list">
+							<li><a href="fragment/microcontrollers.html">引脚结构</a></li>
+						</ul>
+				</li>
+				
+				<li><h3>前端开发</h3>
+					<ul class="articles-list">
+						<li><a href="font_end/js_rule.html">优雅的javascript</li>
+						<li><a href="font_end/js_render.html">javascript模板渲染</li>
+						<li><a href="font_end/js_scope.html">javascript作用域</li>
+						<li><a href="font_end/js_closures.html">javascript闭包</li>
+						<li><a href="font_end/js_attr.html">javascript面对对象编程--属性</li>
+						<li><a href="font_end/js_this.html">javascript面对对象编程--this</li>
+						<li><a href="font_end/js_class.html">javascript面对对象编程--类模式</li>
+						<li><a href="font_end/js_attr.html">javascript面对对象编程--委托模式</li>
+						<li><a href="font_end/js_mode.html">javascript设计模式初识</li>
+						<li><a href="webScraping/node_crawler.html">node爬虫</a></li>
+					</ul>
+				</li>
 			 </ul>
 		</div>
-		<div class="recent-posts">
-			<h2>Recent posts</h2>
-			<ul><li>2016/8/31</li>
-			<li>2016/8/30</li>
-			<li>2016/8/29</li></ul>
-		</div>
+		
 		<div class="connect-me">
-			<h2>Get in touch with us at zhangzhanging@gmail.com</h2>
+			<p>Email: zhangzhanging@gmail.com</p>
 		</div>
-		<div class="share">
-			<h2>Share</h2>
-		</div>
+		
 	</div>
 </div>
 </body>

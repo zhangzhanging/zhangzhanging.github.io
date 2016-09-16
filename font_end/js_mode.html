@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>javascript模式</title>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<style type="text/css">
+		pre{
+			background-color: #fff;
+			color: rgb(0,0,0);
+			font-family: "Microsoft Yahei";
+		}
+	</style>
+</head>
+<body>
+<header>
+	<div class="info">
+		<div class="blog-photo"><img src="../images/me.jpg"></div>
+		<div class="blog-intro">
+			<p class="blog-name">初木禾君</p>
+			<p class="blog-university">Tianjin University</p>
+		</div>
+	</div>
+</header>
+<article class="container">
+	<section>
+		<h3>门面模式(包装器)</h3>
+		<pre>
+function DOMWrapper(element){
+	this.element = element;
+}
+
+DOMWrapper.prototype.addClass = function(className){
+	element.className+=" "+className;
+};
+	
+DOMWrapper.prototype.remove = function(){
+	this.element.parentNode.removeChild(this.element);
+};
+//构造DOMWrapper对象
+var wrapper = new DOMWrapper(document.getElementById("my-div"));
+//添加class
+wrapper.addClass("selected");
+//删除元素
+wrapper.remove();			
+		</pre>
+	</section>
+</article>
+	
+<footer>参考书籍：《你不知道的javascript》</footer>
+</body>
+</html>

@@ -34,7 +34,7 @@ header{
 		margin-right: 0px;
 }
 .container{
-	width: 70%;
+	width: 80%;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -85,5 +85,7 @@ a:hover{
 }
 footer{
 	font-size: 14px;
+	margin-bottom: 20px;
+	margin-right: 20px;
 	float: right;
 }
