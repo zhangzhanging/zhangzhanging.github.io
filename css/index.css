@@ -76,9 +76,10 @@ li{
 	list-style-type: none;
 }
 a{
-	color: rgb(33,33,33);
+	color: rgb(255,255,255);
 	text-decoration: none;
 	transition: 0.3s;
+	line-height: 30px;
 }
 a:hover{
 	color: #009987;
