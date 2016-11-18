@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <header>张涛的学习笔记</header>
+    <header><a href="../index.html">张涛的学习笔记</a></header>
     <aside class="d-grid-3">
         <ul>
             <a href="#tag1">
@@ -61,51 +61,49 @@
                                 <br/>无符号数字的截断结果：B2U<sub>k</sub>([x<sub>k-1</sub>,x<sub>k-2</sub>,...,x<sub>0</sub>,])=B2U<sub>w</sub>([x<sub>w-1</sub>,x<sub>w-2</sub>,...,x<sub>0</sub>,])mod 2<sup>k</sup>
                                 <br/> 补码数字的截断结果：B2T
                                 <sub>k</sub>([x<sub>k-1</sub>,x<sub>k-2</sub>,...,x<sub>0</sub>,])=U2T<sub>k</sub>(B2U<sub>w</sub>([x<sub>w-1</sub>,x<sub>w-2</sub>,...,x<sub>0</sub>,])mod 2<sup>k</sup>)</div>
-
                             <h2>微妙的bug</h2>
                             <p>看下列两段由于有符号数和无符号数之间的隐式转换引发的微妙的bug</p>
                             <pre>
 float sun_elements(float a[],unsigned length){
-	int i;
-	float result = 0;
-	for (int i = 0; i <= length-1; i++){
-		result+=a[i];
-	}
-	return result;
-}	</pre>
+    int i;
+    float result = 0;
+    for (int i = 0; i <= length-1; i++){
+        result+=a[i];
+    }
+    return result;
+}   </pre>
                             <br/>
                             <pre>
 unsigned int strlen(const char *s);
 
 int strlonger(char *s,char *t){
-	return strlen(s) - strlen(t) > 0;
-}	</pre>
+    return strlen(s) - strlen(t) > 0;
+}   </pre>
                             <p>第一段代码的参数length被设为了unsigned int型，判断条件中的length-1被隐式转换成了一个无符号数，当length为0是，结果应该是0.0，循环语句执行0次，然而这里面-1(length-1)变成了一个很大的无符号整数，导致出错。第二段代码也一样，strlen(s)-strlen(t)返回一个无符号数，不可能得到负数。</p>
                             <p>为了避免诸如此类微妙的bug，最好的方法就是不使用无符号数。事实上，Java并不支持无符号数类型。</p>
         </div>
-		<div>关于强制类型转换，在这里还要提一下关于C语言指针间的转换。看一下下面的这一行代码<pre>
+        <div>关于强制类型转换，在这里还要提一下关于C语言指针间的转换。看一下下面的这一行代码<pre>
 int a = 36;
-float f = *(float *)&amp;a;</pre>
-这段代码是将一个int型指针转换成一个float型的指针，位模式依旧不会发生改变，只是指针会根据不同的指针类型确定读取的长度。这段代码并不会输出36.0，而是一个很小的数，结果如下图所示。这和浮点数的位表示方法是相关的，浮点数在计算机中采用的是IEEE浮点数表示方法。下面会有详细的表示方法的介绍。</div>
-<figure class="d-grid-6 m-grid-4" style="padding: 0;"><img src="../images/result3.png"></figure>
+float f = *(float *)&amp;a;</pre> 这段代码是将一个int型指针转换成一个float型的指针，位模式依旧不会发生改变，只是指针会根据不同的指针类型确定读取的长度。这段代码并不会输出36.0，而是一个很小的数，结果如下图所示。这和浮点数的位表示方法是相关的，浮点数在计算机中采用的是IEEE浮点数表示方法。下面会有详细的表示方法的介绍。
+        </div>
+        <figure class="d-grid-6 m-grid-4" style="padding: 0;"><img src="../images/result3.png"></figure>
         <h2 id="tag4">整数的运算</h2>
-
         <h2 id="tag5">浮点数表示</h2>
         <div>浮点表示对形如V=x*2<sup>y</sup>的有理数进行编码，它对执行涉及非常大的数字，非常接近0的数，以及更普遍的作为实数运算近似值的计算非常的有用。
-        	<p>给出一种简单易懂的浮点数换算思路：二进制序列乘以权值，单精度数有1个符号位，8个整数位，23个小数位，所以权值依次应该是2<sup>7</sup>...2<sup>0</sup>2<sup>-23</sup>,虽然这不是最终的浮点数的表示方法，不过却提供了一种表示浮点数的思路。</p>
+            <p>给出一种简单易懂的浮点数换算思路：二进制序列乘以权值，单精度数有1个符号位，8个整数位，23个小数位，所以权值依次应该是2<sup>7</sup>...2<sup>0</sup>2<sup>-23</sup>,虽然这不是最终的浮点数的表示方法，不过却提供了一种表示浮点数的思路。</p>
             <h3>IEEE浮点表示：V=(-1)<sup>s</sup> * M * 2<sup>E</sup></h3>
             <figure style="padding: 0" class="d-grid-5 m-grid-4"><img src="../images/IEEE.jpg"></figure>
             <figure style="padding: 0" class="d-grid-5 m-grid-4"><img src="../images/E.jpg"></figure>
             <p>
                 尾数M是一个二进制小数，它的范围是1~2-&epsilon;，或者0~1-&epsilon;。 阶码E的作用是对浮点数进行加权，这个权重是2的E次幂(可能是负数)。
             </p>
-            <p>规格化的值中，阶码字段被解释为以偏置(biased)形式表示的有符号整数。阶码的值E=e-Bias,e表示无符号数，其位表示为e<sub>k-1</sub>...e<sub>1</sub>e<sub>0</sub>，而Bias是一等于2<sup>k-1</sup>-1(单精度为127，双精度为1023)的偏置值。由此产生指数的取值范围，单精度-126~+127，双精度是-1022~+1023。对于小数字段frac的解释为描述小数值得f(0<=f&lt;1),其二进制表示为0.f<sub>n-1</sub>f<sub>n-2</sub>...f<sub>0</sub>。把尾数定义为M=f+1。</p>
+            <p>规格化的值中，阶码字段被解释为以偏置(biased)形式表示的有符号整数。阶码的值E=e-Bias,e表示无符号数，其位表示为e<sub>k-1</sub>...e<sub>1</sub>e<sub>0</sub>，而Bias是一等于2<sup>k-1</sup>-1(单精度为127，双精度为1023)的偏置值。由此产生指数的取值范围，单精度-126~+127，双精度是-1022~+1023。对于小数字段frac的解释为描述小数值得f(0
+                <=f&lt;1),其二进制表示为0.f<sub>n-1</sub>f<sub>n-2</sub>...f<sub>0</sub>。把尾数定义为M=f+1。</p>
             <span style="color: red">书上写道：既然我们能够调整阶码E,使得尾数M在范围1<=M&lt;2之中(假设没有溢出)，那么这种表示方法是一种轻松获得额外精度位的技巧，我表示不是很理解其原因。</span>
             <p>在非规格化值中，阶码值是E=1-Bias,尾数的值M=f。将阶码值设置为1-Bias而不是-Bias提供了一种从非规格化值到规格化值平滑转换的方法。非规格化值可以用来表示0，应为对于规格化值M>=1,所以规格化值表示不了0。非规格化值得另一个功能是表示那些非常接近0.0的值，它们提供一种属性，称为逐渐溢出。其中可能的数值均匀的接近于0.0。</p>
             <p>举个例子理解这种表示法(以8位浮点格式为例，k=4,n=3)</p>
             <p>00000011(非规格数) : e=0;E=-6;2<sub>E</sub>=1/64;f=3/8;M=3/8;V=3/512;十进制：0.005859;</p>
-            <p>00111010(规格数)   : e=1;E=-6;2<sub>E</sub>=1;f=2/8;M=10/8;V=5/4;十进制：1.25;</p>
-            
+            <p>00111010(规格数) : e=1;E=-6;2<sub>E</sub>=1;f=2/8;M=10/8;V=5/4;十进制：1.25;</p>
         </div>
         <h3>浮点数的舍入</h3>
         <div>事实上浮点数的表示方法限制了浮点数的范围和精度，故而浮点运算只能近似的表示实数运算。通过一种系统的方法，找到最接近的匹配近似值，就是舍入运算的任务。以前接触过四舍五入，向上舍入，向下舍入，向0舍入，这里有一种舍入方法叫做向偶数舍入。向偶数舍入能避免向上(下)舍入带来的统计误差，另一方面向偶数舍入能够运用二进制小数。比如说小数舍入到最接近1/4的位置。</div>

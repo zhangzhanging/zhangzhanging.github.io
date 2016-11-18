@@ -8,19 +8,27 @@
 </head>
 
 <body>
-    <header>张涛的学习笔记</header>
+    <header><a href="../index.html">张涛的学习笔记</a></header>
     <aside class="d-grid-3">
-    	<ul>
-            <a href="#tag1"><li>TCP服务器端套接字</li></a>
-            <a href="#tag2"><li>TCP客户端套接字</li></a>
-            <a href="#tag3"><li>UDP服务器端套接字</li></a>
-            <a href=""><li>UDP客户端套接字</li></a>
+        <ul>
+            <a href="#tag1">
+                <li>TCP服务器端套接字</li>
+            </a>
+            <a href="#tag2">
+                <li>TCP客户端套接字</li>
+            </a>
+            <a href="#tag3">
+                <li>UDP服务器端套接字</li>
+            </a>
+            <a href="">
+                <li>UDP客户端套接字</li>
+            </a>
         </ul>
     </aside>
     <section class="d-grid-7 m-grid-4 d-grid-offset-3">
-    	<h1>使用python创建套接字</h1>
-    	<h2 id="tag1">TCP服务器端套接字实现代码</h2>
-		<pre>
+        <h1>使用python创建套接字</h1>
+        <h2 id="tag1">TCP服务器端套接字实现代码</h2>
+        <pre>
 # -*- coding: utf-8 -*- 
 from socket import *
 from time import ctime
@@ -51,9 +59,9 @@ while True:                 #无限循环等待连接到来
     except Exception,e:
         print 'Error: ',e
 tcpSerSock.close()          #关闭服务器
-		</pre>
-		<h2 id="tag2">TCP客户端套接字实现代码</h2>
-		<pre>
+        </pre>
+        <h2 id="tag2">TCP客户端套接字实现代码</h2>
+        <pre>
 # -*- coding: utf-8 -*- 
 from socket import *
 from time import ctime
@@ -79,9 +87,9 @@ while True:                 #无限循环等待连接到来
         print 'Error: ',e
         
 tcpCliSock.close()          #关闭客户端
-		</pre>
-		<h2 id="tag3">UDP服务器端套接字实现代码</h2>
-		<pre>
+        </pre>
+        <h2 id="tag3">UDP服务器端套接字实现代码</h2>
+        <pre>
 # -*- coding: utf-8 -*- 
 from socket import *
 from time import ctime
@@ -105,9 +113,9 @@ while True:                 #无限循环等待连接到来
     except Exception,e:
         print 'Error: ',e
 udpSerSock.close()          #关闭服务器
-		</pre>
-		<h2 id="tag4">UDP客户端套接字实现代码</h2>
-	<pre>
+        </pre>
+        <h2 id="tag4">UDP客户端套接字实现代码</h2>
+        <pre>
 # -*- coding: utf-8 -*- 
 from socket import *
 
@@ -133,7 +141,7 @@ while True:                 #无限循环等待连接到来
         print 'Error: ',e
         
 udpCliSock.close()          #关闭客户端
-	</pre>
+    </pre>
     </section>
     <footer>一个代码爱好者</footer>
 </body>

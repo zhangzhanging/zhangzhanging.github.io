@@ -9,19 +9,27 @@
 </head>
 
 <body>
-    <header class="write">张涛的学习笔记</header>
+    <header><a href="../index.html">张涛的学习笔记</a></header>
     <aside class="d-grid-3">
-    	<ul>
-            <a href="#tag1"><li>获取segmentfault博客标题</li></a>
-            <a href="#tag2"><li>获取糗事百科段子</li></a>
-            <a href="#tag3"><li>测试node爬虫的可用性</li></a>
-            <a href="#tag4"><li>获取慕课网node教程的标题</li></a>
+        <ul>
+            <a href="#tag1">
+                <li>获取segmentfault博客标题</li>
+            </a>
+            <a href="#tag2">
+                <li>获取糗事百科段子</li>
+            </a>
+            <a href="#tag3">
+                <li>测试node爬虫的可用性</li>
+            </a>
+            <a href="#tag4">
+                <li>获取慕课网node教程的标题</li>
+            </a>
         </ul>
     </aside>
     <section class="m-grid-4 d-grid-7 d-grid-offset-3">
-    <h1>网络数据采集--编写爬虫</h1>
-    <h2 id="tag1">使用python获取segmentfault推荐的博客标题</h2>
-    <pre>
+        <h1>网络数据采集--编写爬虫</h1>
+        <h2 id="tag1">使用python获取segmentfault推荐的博客标题</h2>
+        <pre>
     #by zhangtao
     #coding:utf-8
     import urllib
@@ -46,8 +54,8 @@
     	print item
     	print 
 		</pre>
-		<h2 id="tag2">使用python获取糗事百科段子</h2>
-		<pre>
+        <h2 id="tag2">使用python获取糗事百科段子</h2>
+        <pre>
 #-*- coding:utf-8 -*-
 import urllib
 import urllib2
@@ -156,8 +164,8 @@ class QSBK:
 spider = QSBK()
 spider.start()
 			</pre>
-			<h2 id="tag3">测试node爬虫的可用性</h2>
-			<pre>
+        <h2 id="tag3">测试node爬虫的可用性</h2>
+        <pre>
 #nodeServer.js
 var http = require("http");
  
@@ -203,8 +211,8 @@ server.download(url, function(data) {
   } 
 }); 
 			</pre>
-			<h2 id="tag4">使用node.js获取慕课网node视频教程的标题</h2>
-			<pre>
+        <h2 id="tag4">使用node.js获取慕课网node视频教程的标题</h2>
+        <pre>
 var http = require('http');
 var cheerio = require('cheerio');
 var url = 'http://www.imooc.com/learn/348';
