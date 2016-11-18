@@ -43,7 +43,12 @@ p {
 a {
     text-decoration: none;
 }
-
+header a{
+    color:#fff;
+}
+header a:hover{
+    color: #fff;
+}
 div {
     color: #555;
     letter-spacing: 1px;
