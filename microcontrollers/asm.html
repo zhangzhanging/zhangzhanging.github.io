@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>zhgt</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <link rel="stylesheet" type="text/css" href="../layout.css">
+</head>
+
+<body>
+    <header><a href="../index.html">张涛的学习笔记</a></header>
+    <section class="d-grid-7 m-grid-4 d-grid-offset-3">
+<h5>编写能把20H单元的两个BCD数变换成相应的ASCII码并放在21H（高位BCD数的ASCII码）和22H（低位BCD数的ASCII码）单元的程序</h5>
+<pre>
+ORG 0500H
+MOV R0,#22H
+MOV @R0,#00H    ;22单元清零
+MOV A,20H		;20H中的BCD数送A
+XCHD A,@R0 		;低位BCD数至22H
+ORL 22H,#30 	;完成低位的BCD数转变
+SWAP A 			;高位BCD数送低4位
+ORL A,#30H 		;完成高位BCD数转变
+MOV 21H,A 		;存入21H单元
+SJMP $ 			;结束
+END
+</pre>
+<h5>已知20H单元中有一个二进制数，请编程把它转换成3位BCD数，把百位BCD数送进FIRST单元的低四位，十位和个位BCD数放在SECOND单元，十位BCD数在SECOND单元的高4位</h5>
+<pre>
+		ORG 0200H
+FIRST 	DATA 30H
+SECOND  DATA 31H
+		MOV A,20H 			;
+		MOV B,#64H 			;
+		DIV AB 				;
+		MOV FIRST,A 		;
+		MOV A,B 			;
+		MOV B,#0AH 			;
+		DIV AB 				;
+		SWAP A 				;
+		ORL A,B				;
+		MOV SECOND,A 		;
+		SJMP $
+		END
+</pre>
+<h5>已知一个补码形式的16位二进制数（低8位在NUM单元，高八位在NUM+1）单元，试编写能求该16位二进制原码的绝对值程序</h5>
+<pre>
+	ORG 0300H
+NUM DATA 20H
+	MOV R0,#NUM
+	MOV A,@R0
+	CPL A
+	ADD A,#01
+	MOV @R0,A
+	INC R0
+	MOV A,@R0
+	CPL A
+	ADDC A,#00H
+	ANL A,#7FH
+	MOV @R0,A
+	SJMP $
+	END	
+</pre>
+<h4>分支程序设计</h4>
+<h5>已知VAR单元中存有一变量X，按照以下条件编写出求函数值Y并将它存入FUNC单元，Y=1(X>0);0(X=0);-1(X < 0)</h5>
+<pre>
+	 ORG 0100H 
+VAR  DATA 30H
+FUNC DATA 31H
+	 MOV A,VAR
+	 JZ DONE
+	 JNB ACC.7,POSI
+	 MOV A,#0FFH;
+	 SJMP DONE
+POSI: MOV A,#01H
+DONE: MOV FUNC,A
+	  SJMP $
+	  END
+</pre>
+<h5>N=128的分支程序，已知R3的值为00H~7FH中的一个，请编出根据R3中值转移到相应分支程序的程序</h5>
+<pre>
+		ORG 2100H
+		MOV A,R3
+		RL A
+		MOVE DPTR,#BRTAB
+		JMP @A+DPTR
+		...
+BRTAB:	AJMP ROUT00  ;该指令两个字节
+		AJMP ROUT01
+		AJMP ROUT02
+		...
+		AJMP ROUT127
+ROUT100: ...
+		...
+ROUT107: ...
+		 END
+</pre>
+<h5>已知两个带符号数分别存于ONE和TWO单元，试编程比较他们的大小并把大数存在MAX单元</h5>
+<p>如果X-Y是正数，在OV=0时，X>Y；在OV=1时，X < Y;
+	如果X-Y是负数，在OV=0时，X < Y；在OV=1时，X > Y;</p>
+<pre>
+		ORG 0400H
+ONE 	DATA 30H
+TWO 	DATA 31H
+MAX 	DATA 32H
+		CLR C
+		MOV A,ONE
+		SUBB A,TWO
+		JZ DONE
+		JB ACC.7,NEG
+		JB OV,YMAX
+		SJMP XMAX
+NEG:	JB OV,XMAX
+YMAX:	MOV A,TWO
+		SJMP DONE
+XMAX:	MOV A,ONE
+DONE: 	MOV MAX,A
+		SJMP $
+		END
+</pre>
+<h5>某系有200多名学生参加外语统考，若成绩已存放在MSC-51外部RAM起始地址为ENGLISH的连续存储单元。现决定给成绩在95~100分之间的学生颁发A级合格证书，并给成绩在90~94分之间的学生颁发B级合格证书。编写程序，统计获得的A级和B级证书的学生人数，并将统计结果存在内部RAM的GRADA和GRADB单元</h5>
+<pre>
+		ORG 0600H
+ENGLISH XDATA 1000H
+CRADA 	DATA 20H
+GRADB 	DATA 21H
+		MOV GRADA,#00H
+		MOV GRADB,#00H
+		MOV R2 #0C8H
+		MOV DPTR,#ENGLISH
+LOOP:	MOVC A,@DPTR
+		CJNE A,#5F,LOOP1
+LOOP1:	JNC NEXT1
+		CJNE A,#5AH,LOOP2
+LOOP2: 	JC NEXT
+		INC GRADB
+		SJMP NEXT
+NEXT1: 	INC GRADA
+NEXT:  	INC DPTR
+		DJNZ R2,LOOP
+		SJMP $
+		END
+</pre>
+<h5>已知在内部RAM的BLOCK单元开始有一无符号数据块，块长在LEN单元，请编写求数据块中各数累加和并存入SUM单元</h5>
+<pre>
+		ORG 0200H
+LEN 	DATA 20H
+SUM 	DATA 21H
+BLOCK	DATA 22H
+		CLR A
+		MOV R2,LEN
+		MOV R1,#BLOCK
+		INC R2
+		SJMP CHECK
+LOOP:	ADD A,@R1
+		INC R1
+CHECK:	DJNZ R2,LOOP
+		MOV SUM,A
+		SJMP $
+		END
+</pre>
+<h5>已知内部RAM ADDR为起始地址的数据块内数据是无符号数，块长在LEN单元。编程求数据块中最大值并存入MAX单元</h5>
+<pre>
+		ORG 0300H
+LEN 	DATA 20H
+MAX 	DATA 22H
+ADDR	DATA 23H
+		MOV MAX #00H
+		MOV R0,#ADDR
+LOOP:	MOV A,@R0
+		CJNE A,MAX,NEXT1
+NEXT1:  JC NEXT
+		MOV MAX,A
+NEXT:	INC R0
+		DJNZ LEN,LOOP
+		SJMP $
+		END
+</pre>
+<h5>设有10组3字节被加数和加数，分别存放在BLOCK1和BLOCK2为起始地址的两个数据块中，编程求10组数的和（和设为3字节），并把和送回以BLOCK1为起始地址的数据块中 </h5>
+<pre>
+		ORG 0500H
+BLOCK1  DATA 20H
+BLOCK2  DATA 40H
+		MOV R0,#BLOCK1
+		MOV R1,#BLOCK2
+		MOV R2,#0AH
+LOOP:	MOV R3,#03H
+		CLR C
+LOOP1:	MOV A,@R0
+		ADDC A,@R1
+		MOV @R0,A
+		INC R0
+		INC R1
+		DJNZ R3,LOOP1
+		DJNE R2,LOOP
+		SJMP $
+		END
+</pre>
+<h5>设单片机8031内部RAM起始地址为30H的数据块有64个无符号数，编写程序使他们从小到大排列(冒泡排序）</h5>
+<pre>
+		ORG 1000H
+BUBBLE:	MOV R0,#30H
+		MOV R2,#64
+		CLR 7FH
+		DEC R2
+BULOOP: MOV 20H,@R0
+		MOV A,@R0
+		INC R0
+		MOV 21H,@R0
+		CJNE A,21H,LOOP
+LOOP:	JC BUNEXT
+		MOV  @R0,20H
+		DEC R0
+		MOV @R0,21H
+		INC R0
+		SETB 7FH
+BUNEXT:	DJNZ R2,BULOOP
+		JB 7FH,BUBBLE
+		SJMP $
+		END	
+</pre>
+<h5>已知R0低四位有一个十六进制数（0~F中的一个），请编写能把他转换成相应的ASCII码并送入R0的程序</h5>
+<p>计算求解0~9对应的ASCII码为30H~39H,A~F是的ASCII码为41H~46H</p>
+<pre>
+		ORG 0400H
+		MOV A,R0
+		ANL A,#0FH
+		CJNE A,#10，NEXT1
+NEXT1:	JNC NEXT2
+		ADD A,#30H
+		SJMP DONE
+NEXT2： ADD A,#37H
+DONE:	MOV R0,A
+		SJMP $
+		END
+</pre>
+<p>查表方法</p>
+<pre>
+		ORG 0400H
+		MOV A,R0
+		ANL A,#0FH
+		ADD A,#03H
+		MOVC A,@A+PC
+		MOV R0,A
+		SJMP $
+ASCTAB: DB  '0','1','2','3','4'
+		DB  '5','6','7','8','9'
+		DB  'A','B','C','D','E','F'
+		END
+</pre>
+<p>已知BLOCK1为起始地址的数据块（数据块长度在LEN单元），数据块中每一个存储单元的高低4位分别为两个十六进制数，通过编程吧他们转换成相应的ASCII码，并放在从BLOCK2开始的连续单元（低四位ASCII码在前，高四位ASCII码在后）</p>
+<pre>
+		ORG 0500H
+LEN     DATA 20H
+BLOCK1	DATA 21H
+BLOCK2	DATA 51H
+		MOV R0,#BLOCK1
+		MOV R1,#BLOCK2
+LOOP:	MOV A,@R0
+		ANL A,#0FH
+		ADD A,#17
+		MOCV A,@A+PC
+		MOV @R1,A
+		MOV A,@R0
+		SWAP A
+		ANL A,#0FH
+		ADD A,#09H
+		MOVC A,@A+PC
+		INC R1
+		MOV @R1,A
+		INC R0
+		INC R1
+		DJNZ LEN,LOOP
+		SJMP $
+ASCTAB:	DB  '0','1','2','3','4'
+		DB  '5','6','7','8','9'
+		DB  'A','B','C','D','E','F'
+		END
+</pre>
+<h5>设有一起始地址为DTATAB的数据表格，表中存放有1024个元素，每个元素为两个字节，请编写能根据R5，R4中序号查找对应元素并放入R5，R4(R5中为高八位，R4中为低八位）</h5>
+<pre>
+		ORG 0500H
+START: 	MOV DPTR,#DTATAB
+		MOV A,R4
+		CLR C
+		RLC A
+		XCH A,R5
+		ADD A,DPL
+		MOV DPL,A
+		MOV A,DPH
+		ADDC A,R5
+		MOV DPH,A
+		CLR A
+		MOVC A,@A+DPTR
+		MOV R5，A
+		MOV A,#01H
+		MOCV A,@A+DPTR
+		MOV R4，A
+		RET
+DTATAB: DW ...
+		DW ...
+		DW ...
+</pre>
+</section>
+    <footer>一个代码爱好者</footer>
+</body>
+
+</html>
+
+
+
