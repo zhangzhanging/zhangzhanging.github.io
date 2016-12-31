@@ -301,6 +301,238 @@ DTATAB: DW ...
 		DW ...
 		DW ...
 </pre>
+<h5>设MDA,MDB内有两个数a,b，编写求c=a^2+b^2，并将c送入MDA的程序(a,b均为小于10的整数)</h5>
+<pre>
+		ORG 1000H
+MDA 	DATA 20H
+MDB 	DATA 21H
+MDC 	DATA 22H
+		MOV A,MDA
+		ACALL SQR
+		MOV R1,A
+		MOV A,MDB
+		ACALL SQR
+		ADD A,R1
+		MOV MDC,A
+		SJMP $
+SQR:	ADD A,01H
+		MOVC A,@A+PC
+		RET
+SQRTAB:	DB 0,1,4,9,16
+		DB 25,36,49,64,81
+		END
+</pre>
+<h5>在HEX单元中存有两个十六进制数，通过编程分别把它们转换成ASCII码存入ASC和ASC+1单元</h5>
+<pre>
+		ORG 1200H 
+		PUSH HEX
+		ACALL HASC
+		POP ASC
+		MOV A,HEX
+		SWAP A
+		PUSH ACC
+		ACALL HASC
+		POP ASC+1
+		SJMP $
+HASC:   DEC SP
+		DEC SP
+		POP ACC
+		ANL A,#0FH
+		ADD A,#07H
+		MOVC A,@A+PC
+		PUSH ACC
+		INC SP
+		INC SP
+		RET
+ASCTAB: DB '0','1','2','3','4','5','6','7'
+		DB '8','9','A','B','C','D','E','F'
+		END
+</pre>
+<h5>已知片内RAM中有一个5位BCD码（高位在前，低位在后），最大不超过65535，其实地址在R0中，BCD码位数减一（04H）已在R2中，请编写把BCD码转换为二进制整数并存入R3R4（R4中为高8位）中的程序</h5>
+<pre>
+	
+</pre>
+<h5>已知以内部RAM BLOCK1,BLOCK2为起始地址的存储区中分别有5字节无符号被减数和减数（低位在前，高位在后）请编写减法子程序令他们相减，并把差放入以BLOCK1为起始地址的存储单元</h5>
+<pre>
+			ORG 0A00H
+SBYTESUB:	MOV R0,#BLOCK1
+			MOV R1,#BLOCK2
+			MOV R2,#05H
+			CLR C
+LOOP:		MOV A,@R0
+			SUBB A,@R1
+			MOV @R0,A
+			INC R0
+			INC R1
+			DJNZ R2,LOOP
+			RET 
+			END
+</pre>
+<h5>设在BLOCK和BLOCK1+1单元有两个补码形式的带符号数，请编写求两数之和并把它们放在 SUM和SUM+1（低八位在SUM单元）的子程序</h5>
+<pre>
+		ORG 0100H
+SBADD:	PUSH ACC
+		PUSH PSW
+		MOV PSW,#08H
+		MOV R0,#BLOCK
+		MOV R1,#SUM
+		MOV R2,#00H
+		MOV R3,#00H
+		MOV A,@R0
+		JNB ACC.7,POS1
+		MOV R2,#0FFH
+POS1:	INC R0
+		MOV B,@R0
+		JNB B.7,POS2
+		MOV R3,#0FFH
+POS2:	ADD A,B
+		MOV @R1,A
+		INC R1
+		MOV A,R2
+		ADDC A,R3
+		MOV @R1,A
+		POP PSW
+		POP ACC
+		RET
+		END
+</pre>
+<h5>16位无符号乘法程序。已知内部RAM的BLOCK1和BLOCK2开始的存储单元存放有16位乘数和被乘数（低字节在前，高字节在后）编程求积放入内部RAM BLOCK3开始的连续 四个存储单元（低字节在前，高字节在后）</h5>
+<pre>
+	;主程序
+	ORG 0A00H
+	MOV R4,BLOCK1
+	MOV R5,BLOCK1+1
+	MOV R6,BLOCK2
+	MOV R7,BLOCK2+1
+	MOV R0,BLOCK3
+	ACALL MLTY
+	...
+	;子程序
+MLTY: 	MOV A,R6
+		MOV B,R4
+		MUL AB
+		MOV @R0,A
+		MOV R3,B
+		MOV A,R7
+		MOV B,R4
+		MUL AB
+		ADD A,R3
+		MOV R3,A
+		MOV A,B
+		ADDC A,#00H
+		MOV R2,A
+		MOV A,R6
+		MOV B,R5
+		MUL AB
+		ADD A,R3
+		INC R0
+		MOV @R0,A
+		MOV A,R2
+		ADDC A,B
+		MOV R2,A
+		MOV R1,#00H
+		JNC NEXT
+		INC R1
+NEXT:	MOV A,R7
+		MOV B,R5
+		MUL AB
+		ADD A,R2
+		INC R0
+		MOV @R0,A
+		MOV A,B
+		ADDC A,R1
+		INC R0
+		MOV @R0,A
+		RET 
+		END 
+</pre>
+<P>设R0,R1中有两个 补码形式的带符号数，编写两数之积送入R3R2(R3表示高8位）</P>
+<pre>
+		ORG 0600H
+SBIT 	BIT 20H.0
+SBIT1	BIT 20H.1
+SBIT2	BIT 20H.2
+		MOV A,R0
+		RLC A
+		MOV SBIT1,C
+		MOV A,R1
+		RLC A
+		MOV SBIT2,C
+		ANL C,/SBIT1
+		MOV SBIT,C
+		MOV C,SBIT1
+		ANL A,/SBIT2
+		ORL C,SBIT
+		MOV SBIT,C
+		MOV A,R0
+		JNB SBIT1,NCH1
+		CPL A
+		INC A
+NCH1:	MOV B,A
+		MOV A,R1
+		JNB SBIT2,NCH2
+		CPL A
+		ADD A,#01H
+NCH2:	MUL AB
+		JNB SBIT,NCH3
+		CPL A
+		ADD A,#01H
+NCH3:	MOV R2,A
+		MOV A,B
+		JNB SBIT,NCH4
+		CPL A
+		ADDC A,#00H
+NCH4:	MOV R3,A
+		SJMP $
+		END
+</pre>
+<h5>设32位长的被除数被放在R5R4R3R2（R5内是最高字节），16位除数放在R7R6中，请编写使商存于R2R3,余数存于R4R5中的除法程序。该程序应能判定除数为0时转入ERR出错处理程序并且当商超过两个字节时使PSW中的F1=0</h5>
+<pre>
+		ORG 0A00H
+MSDIV:	MOV A,R6
+		JNZ START
+		MOV A,R7
+		JZ ERR
+START:  MOV A,R4
+		CLR C
+		SUBB A,R6
+		MOV A,R5
+		SUBB A,R7
+		JNC LOOP4
+		MOV B,#16
+LOOP1:  CLR C
+		MOV A,R2
+		RLC A
+		MOV R2,A
+		MOV A,R3
+		RLC A
+		MOV R3,A
+		MOV A,R4
+		RLC A
+		XCH A,R5
+		RLC A
+		XCH A,R5
+		MOV PSW.5,C
+		CLR C
+		SUBB A,R6
+		MOV R1,A
+		MOV A,R5
+		SUBB A,R7
+		JB PSW.5,LOOP2
+		JC LOOP3
+LOOP2:	MOV R5,A
+		MOV A,R1
+		MOV R4,A
+		INC R2
+LOOP3:	DJNZ B,LOOP1
+		CLR PSW.5
+DONE:	RET 
+LOOP4:  SETB PSW.5
+		SJMP DONE
+ERR:	
+		END
+
+</pre>
 </section>
     <footer>一个代码爱好者</footer>
 </body>
